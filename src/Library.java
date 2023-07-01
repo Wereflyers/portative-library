@@ -3,10 +3,10 @@ import java.util.Scanner;
 
 public class Library {
 
-    ArrayList<Book> bookList;
-    Scanner scanner;
+    static final ArrayList<Book> bookList;
+    private static final Scanner scanner;
 
-    public Library() {
+    static {
         bookList = new ArrayList<>();
         scanner = new Scanner(System.in);
     }
@@ -20,6 +20,10 @@ public class Library {
 
         System.out.println("Введите год издания:");
         int year = scanner.nextInt();
+        while (year < 0) {
+            System.out.println("Некорректный год издания. Попробуйте снова");
+            year = scanner.nextInt();
+        }
 
         bookList.add(new Book(name, author, year));
     }
@@ -29,8 +33,8 @@ public class Library {
         String author = scanner.nextLine();
 
         for (Book book : bookList) {
-            if (book.getAuthor().equals(author)) {
-                System.out.println(book.getTitle() + ", " + book.year);
+            if (book.author().equals(author)) {
+                System.out.println(book.title() + ", " + book.year());
             }
         }
     }
@@ -38,7 +42,7 @@ public class Library {
     public void printAll() {
         System.out.println("Всего найдено: " + bookList.size() + " книг.");
         for (Book book : bookList) {
-            System.out.println(book.getAuthor() + " " + book.getTitle() + ", " + book.getYear());
+            System.out.println(book.author() + " " + book.title() + ", " + book.year());
         }
     }
 
